@@ -14,17 +14,15 @@ from rich import print
 from uuid import uuid4
 import click
 
-def init(obj: dict):
+def init(scenario_output_path: Path):
     """ Initialize a new scenario and write it to a file.
 
         Author:
             Benedikt SCHWERING <mail@bschwer.ing>
 
         Params:
-            obj (dict): The dictionary containing the CLI arguments.
+            scenario_output_path (Path): The path to the scenario output directory.
     """
-    scenario_output_path = Path(obj['scenario_output_path'])
-
     # Check if the scenario file already exists and ask for overwrite
     if (scenario_output_path / 'scenario.yml').exists():
         print(f'[red]\[warning][/] Scenario file already exists')
