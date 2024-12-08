@@ -6,12 +6,11 @@ Copyright (C) 2024 Benedikt Schwering
 This software is distributed under the terms of the MIT license.
 It can be found in the LICENSE file or at https://opensource.org/licenses/MIT.
 
-Author Benedikt SCHWERING <bes9584@thi.de>
+Author Benedikt SCHWERING <mail@bschwer.ing>
 """
-from src.models.mrt_scenario import MRTScenario
+from src.commands.init import init as init_command
 from pathlib import Path
 from rich import print
-from uuid import uuid4
 import click
 
 @click.group(
@@ -39,7 +38,17 @@ import click
     required=True,
 )
 @click.pass_context
-def cli(ctx, mrt_input_path: str, scenario_output_path: str):
+def cli(ctx: click.Context, mrt_input_path: str, scenario_output_path: str):
+    """ Initialize the CLI context with the input and output paths.
+
+        Author:
+            Benedikt SCHWERING <mail@bschwer.ing>
+
+        Params:
+            ctx (click.Context): The Click context.
+            mrt_input_path (str): The path to the MRT input directory.
+            scenario_output_path (str): The path to the scenario output directory.
+    """
     ctx.ensure_object(dict)
     ctx.obj['mrt_input_path'] = mrt_input_path
     ctx.obj['scenario_output_path'] = scenario_output_path
@@ -53,6 +62,7 @@ def cli(ctx, mrt_input_path: str, scenario_output_path: str):
         f'   scenario output [purple]{scenario_output_path}[/]',
     )
 
+    # Create the scenario output directory if it does not exist
     if not scenario_output_path.exists():
         scenario_output_path.mkdir(
             parents=True,
@@ -65,81 +75,35 @@ def cli(ctx, mrt_input_path: str, scenario_output_path: str):
 )
 @click.pass_obj
 def init(obj: dict):
-    scenario_output_path = Path(obj['scenario_output_path'])
+    """ Initialize a new scenario and write it to a file.
 
-    if (scenario_output_path / 'scenario.yml').exists():
-        print(f'[red]\[warning][/] Scenario file already exists')
-        click.confirm(
-            text='Do you want to overwrite it?',
-            abort=True,
-        )
+        Author:
+            Benedikt SCHWERING <bes9584@thi.de>
 
-    print(f'[green]\[start][/] Initialize scenario')
-
-    scenario = MRTScenario(
-        name=click.prompt(
-            text='Name',
-            default=f'Scenario {str(uuid4())}',
-        ),
-        description=click.prompt(
-            text='Description',
-            default='',
-        ),
-        no_rabbitmq_direct=not click.confirm(
-            text='RabbitMQ direct',
-            default=True,
-        ),
-        rabbitmq_grouped=click.prompt(
-            text='RabbitMQ Grouped Interval',
-            default=5,
-            type=int,
-        ) if click.confirm(
-            text='RabbitMQ Grouped',
-            default=False,
-        ) else None,
-        no_mongodb_log=not click.confirm(
-            text='MongoDB Log',
-            default=False,
-        ),
-        no_mongodb_state=not click.confirm(
-            text='MongoDB State',
-            default=False,
-        ),
-        no_mongodb_statistics=not click.confirm(
-            text='MongoDB Statistics',
-            default=False,
-        ),
-        clear_mongodb=click.confirm(
-            text='Clear MongoDB',
-            default=True,
-        ),
-        playback_speed=click.prompt(
-            text='Playback Speed Value',
-            default=1,
-            type=int,
-        ) if click.confirm(
-            text='Playback Speed',
-            default=False,
-        ) else None,
-        mrt_files=[],
+        Params:
+            obj (dict): The dictionary containing the CLI arguments.
+    """
+    init_command(
+        obj=obj,
     )
-
-    (scenario_output_path / 'scenario.yml').write_text(
-        data=scenario.model_dump_json(
-            indent=4,
-        ),
-    )
-
-    print(f'[yellow]\[info][/] Scenario file created')
 
 @cli.command(
     'append',
 )
 @click.pass_obj
 def append(obj: dict):
+    """ Append MRT data to an existing scenario.
+
+        Author:
+            Benedikt SCHWERING <mail@bschwer.ing>
+
+        Params:
+            obj (dict): The dictionary containing the CLI arguments.
+    """
     mrt_input_path = Path(obj['mrt_input_path'])
     scenario_output_path = Path(obj['scenario_output_path'])
 
+    # Check if the scenario file exists
     if not (scenario_output_path / 'scenario.yml').exists():
         print(f'[red]\[error][/] Scenario file does not exist')
         return

@@ -6,7 +6,7 @@ Copyright (C) 2024 Benedikt Schwering
 This software is distributed under the terms of the MIT license.
 It can be found in the LICENSE file or at https://opensource.org/licenses/MIT.
 
-Author Benedikt SCHWERING <bes9584@thi.de>
+Author Benedikt SCHWERING <mail@bschwer.ing>
 """
 from pydantic import BaseModel
 from typing import Optional
@@ -16,7 +16,7 @@ class MRTScenario(BaseModel):
     This class represents an MRT scenario.
 
     Author:
-        Benedikt Schwering <bes9584@thi.de>
+        Benedikt Schwering <mail@bschwer.ing>
     '''
     name: str
     description: str
