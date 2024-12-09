@@ -38,5 +38,5 @@ class QueryResponse(BaseModel):
         Author:
             Benedikt SCHWERING <mail@bschwer.ing>
     """
-    mrt_files: list[Path]
     rib_file: Optional[Path]
+    mrt_files: list[Path]

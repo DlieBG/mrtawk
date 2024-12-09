@@ -63,7 +63,7 @@ def cli(ctx: click.Context, mrt_input_path: str, scenario_output_path: str):
     print(
         f'[green]\[start][/] mrtawk with\n',
         f'   mrt input [purple]{mrt_input_path}[/]\n',
-        f'   scenario output [purple]{scenario_output_path}[/]',
+        f'   scenario output [purple]{scenario_output_path}[/]\n',
     )
 
     # Create the scenario output directory if it does not exist
@@ -98,13 +98,25 @@ def init(obj: dict):
 @click.option(
     '--start-datetime',
     '-s',
-    type=datetime,
+    type=click.DateTime(
+        formats=[
+            '%Y-%m-%dT%H:%M:%S',
+            '%Y-%m-%dT%H:%M',
+            '%Y-%m-%d',
+        ],
+    ),
     required=True,
 )
 @click.option(
     '--end-datetime',
     '-e',
-    type=datetime,
+    type=click.DateTime(
+        formats=[
+            '%Y-%m-%dT%H:%M:%S',
+            '%Y-%m-%dT%H:%M',
+            '%Y-%m-%d',
+        ],
+    ),
     required=True,
 )
 @click.option(
@@ -173,13 +185,25 @@ def append(obj: dict, start_datetime: datetime, end_datetime: datetime, vendor: 
 @click.option(
     '--start-datetime',
     '-s',
-    type=datetime,
+    type=click.DateTime(
+        formats=[
+            '%Y-%m-%dT%H:%M:%S',
+            '%Y-%m-%dT%H:%M',
+            '%Y-%m-%d',
+        ],
+    ),
     required=True,
 )
 @click.option(
     '--end-datetime',
     '-e',
-    type=datetime,
+    type=click.DateTime(
+        formats=[
+            '%Y-%m-%dT%H:%M:%S',
+            '%Y-%m-%dT%H:%M',
+            '%Y-%m-%d',
+        ],
+    ),
     required=True,
 )
 @click.option(
