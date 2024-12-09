@@ -39,7 +39,7 @@ def query(mrt_input_path: Path, request: QueryRequest) -> QueryResponse:
                 '_'.join(path.name.split('_')[0:2]),
                 '%Y%m%d_%H%M'
             )
-            if not request.start_datetime <= timestamp <= request.end_datetime:
+            if not request.start_datetime <= timestamp < request.end_datetime:
                 continue
 
             # Extract the vendor from the MRT file name
@@ -62,7 +62,6 @@ def query(mrt_input_path: Path, request: QueryRequest) -> QueryResponse:
 
             if bgp_type == 'rib':
                 response.rib_file = path
-
             if bgp_type == 'update':
                 response.mrt_files.append(path)
         except:

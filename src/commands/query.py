@@ -8,12 +8,11 @@ It can be found in the LICENSE file or at https://opensource.org/licenses/MIT.
 
 Author Benedikt SCHWERING <mail@bschwer.ing>
 """
-import click
-
 from src.services.query import query as query_service
 from src.models.query import QueryRequest
 from pathlib import Path
 from rich import print
+import click
 
 def query(mrt_input_path: Path, request: QueryRequest):
     """ Query the MRT archive for a subset of MRTs.
