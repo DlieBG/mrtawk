@@ -67,4 +67,6 @@ def query(mrt_input_path: Path, request: QueryRequest) -> QueryResponse:
         except:
             print(f'[red]\[warning][/] Cannot parse MRT file [purple]{path}[/]')
 
+    response.mrt_files.sort()
+
     return response
