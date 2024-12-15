@@ -12,7 +12,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='mrtawk',
-    version='0.1.0',
+    version='0.1.2',
     description='',
     url='https://git.univ.leitwert.net/imprj/01-bgp-testbed/mrtawk',
     author='Benedikt Schwering',
