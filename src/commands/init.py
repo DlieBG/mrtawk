@@ -24,7 +24,7 @@ def init(scenario_output_path: Path):
             scenario_output_path (Path): The path to the scenario output directory.
     """
     # Check if the scenario file already exists and ask for overwrite
-    if (scenario_output_path / 'scenario.yml').exists():
+    if (scenario_output_path / 'scenario.json').exists():
         print(f'[red]\[warning][/] Scenario file already exists')
         click.confirm(
             text='Do you want to overwrite it?',
@@ -81,7 +81,7 @@ def init(scenario_output_path: Path):
         mrt_files=[],
     )
 
-    (scenario_output_path / 'scenario.yml').write_text(
+    (scenario_output_path / 'scenario.json').write_text(
         data=scenario.model_dump_json(
             indent=4,
         ),

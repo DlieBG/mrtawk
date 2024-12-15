@@ -27,12 +27,12 @@ def append(mrt_input_path: Path, scenario_output_path: Path, request: QueryReque
             scenario_output_path (Path): The path to the scenario output directory.
     """
     # Check if the scenario file exists
-    if not (scenario_output_path / 'scenario.yml').exists():
+    if not (scenario_output_path / 'scenario.json').exists():
         print(f'[red]\[error][/] Scenario file does not exist')
         return
 
     scenario = MRTScenario.model_validate_json(
-        json_data=(scenario_output_path / 'scenario.yml').read_text(),
+        json_data=(scenario_output_path / 'scenario.json').read_text(),
     )
 
     print(
@@ -77,7 +77,7 @@ def append(mrt_input_path: Path, scenario_output_path: Path, request: QueryReque
         scenario.mrt_files = list(set(scenario.mrt_files))
         scenario.mrt_files.sort()
 
-        (scenario_output_path / 'scenario.yml').write_text(
+        (scenario_output_path / 'scenario.json').write_text(
             data=scenario.model_dump_json(
                 indent=4,
             ),

@@ -12,12 +12,12 @@ from pydantic import BaseModel
 from typing import Optional
 
 class MRTScenario(BaseModel):
-    '''
+    """
     This class represents an MRT scenario.
 
     Author:
         Benedikt Schwering <mail@bschwer.ing>
-    '''
+    """
     name: str
     description: str
     no_rabbitmq_direct: bool
